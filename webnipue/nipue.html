@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>镁合金科技 - 航天级技术民用化</title>
+    <style>
+
+        /* 顶部复位样式 */
+        .top-anchor {
+            position: absolute;
+            top: 0;
+            height: 0;
+        }
+         /* 导航栏样式 */
+         .nav-bar {
+            position: fixed;
+            top: 0;
+            height: 75px;
+            width: 100%;
+            background: white;
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            height: 200px;
+            width: auto;  /* 保持原始宽高比 */
+            margin-top: 150px;
+            margin-left: -65px;
+            object-fit: contain; /* 完整显示图片 */
+            margin-right: 50px;
+            transition: all 0.3s ease; /* 添加平滑过渡效果 */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 80px;
+            margin-left: 100px;
+        }
+
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-link.home {
+            font-weight: 700;
+            color: #0066cc;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #0066cc;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* 内容区域定位偏移 */
+        section {
+            scroll-margin-top: 80px;
+        }
+
+        body {
+            padding-top: 80px;
+        }
+        /* 基础样式 */
+        :root {
+            --primary-blue: #0066cc;
+            --dark-blue: #003366;
+            --hover-blue: #0052a3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        /* 头部区域 */
+        .header {
+            height: 120px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            height: 80px;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* 主图区域 */
+        .hero-section {
+            height: 500px;
+            background: url('images/hero-bg.jpg') center/cover;
+            position: relative;
+        }
+
+        /* 服务卡片容器 */
+        .services-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            position: absolute;
+            top: 350px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(1200px, 90%);
+        }
+
+        /* 服务卡片 */
+        .service-card {
+            background: rgba(255,255,255,0.98);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            width: 380px;
+            min-height: 220px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        /* 产品图片 */
+        .product-image {
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+            flex-shrink: 0;
+            background-size: cover;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        #medical .product-image {
+            background-image: url('images/medical-product.jpg');
+            border: 2px solid var(--primary-blue);
+        }
+
+        #drone .product-image {
+            background-image: url('images/drone-product.jpg');
+        }
+
+        #custom .product-image {
+            background-image: url('images/custom-product.jpg');
+        }
+
+        /* 服务内容 */
+        .service-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-spec {
+            line-height: 1.8;
+            color: var(--dark-blue);
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* 按钮样式 */
+        .buy-btn {
+            align-self: flex-start;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .buy-btn:hover {
+            background: var(--hover-blue);
+            transform: scale(1.05);
+        }
+
+        /* 内容区块 */
+        .content-section {
+            max-width: 1200px;
+            margin: 100px auto;
+            padding: 0 30px;
+        }
+
+        /* 标题装饰 */
+        .section-title {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 40px;
+            color: var(--dark-blue);
+            font-size: 28px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 80%;
+            width: 5px;
+            background: var(--primary-blue);
+        }
+
+        /* 模型生成区 */
+        .model-generator {
+            background: #f8faff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .design-input {
+            width: 100%;
+            height: 150px;
+            padding: 20px;
+            border: 2px solid #e0e7ff;
+            border-radius: 8px;
+            resize: vertical;
+            font-size: 16px;
+        }
+    /* 添加模型描述样式 */
+    .model-description {
+        font-size: 18px;
+        color: #2c3e50;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    /* 调整输入框样式 */
+    .design-input {
+        height: 40px;  /* 单行高度 */
+        line-height: 1.5;
+        font-size: 16px;
+        font-family: 'Courier New', monospace;
+        padding: 8px 15px;
+        transition: all 0.3s;
+        /* 禁用多行输入 */
+        resize: none;
+        overflow-y: hidden;
+    }
+
+    /* 输入框聚焦效果 */
+    .design-input:focus {
+        height: 100px;  /* 聚焦时恢复多行高度 */
+        font-size: 14px;
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+        .model-description {
+            font-size: 16px;
+            padding: 0 10px;
+        }
+        
+        .design-input {
+            height: 36px;
+            font-size: 14px;
+        }
+    }
+
+
+        /* 关于我们 */
+        .about-section {
+            display: flex;
+            gap: 40px;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .about-image {
+            width: 600px;
+            height: 300px;
+            flex-shrink: 0;
+            background: url('images/about-us.jpg') center/cover;
+            border-radius: 8px;
+        }
+
+        /* 关于我们文字内容样式 */
+.about-text {
+    font-size: 1.1rem;   /* 基础字体大小 */
+    line-height: 1.8;    /* 行高调整为字号的1.8倍 */
+    color: #444;         /* 使用深灰色提升可读性 */
+    margin: 20px 0;
+}
+
+/* 重点信息强调 */
+.about-text strong {
+    font-size: 1.15rem;  /* 关键数据放大5% */
+    color: #0066cc;      /* 品牌色强调 */
+    font-weight: 600;
+}
+
+
+        /* 成品展示 */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 4/3;
+            background: #f0f4ff;
+            border-radius: 12px;
+            transition: all 0.3s;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+        
+        /* 图片样式 */
+.gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+         /* 模型生成板块悬停效果 */
+        .model-generator {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                    box-shadow 0.3s ease;
+         }
+
+        .model-generator:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        /* 关于我们板块悬停效果 */
+        .about-section {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                    box-shadow 0.3s ease;
+        }
+
+        .about-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .services-container {
+                flex-direction: column;
+                top: -60px;
+            }
+
+            .service-card {
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .about-section {
+                flex-direction: column;
+            }
+
+            .about-image {
+                width: 100%;
+                height: 400px;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+            
+            .product-spec {
+                font-size: 16px;
+            }
+        }
+        /* 底部图片样式 */
+        .footer-image-section {
+            margin-top: 80px;
+            padding: 0 20px;
+        }
+
+        .footer-image {
+            width: 100%;
+            height: auto;
+            max-width: 1200px;
+            margin: 100px auto;
+            display: block;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+        .footer-image-section {
+            margin-top: 50px;
+            padding: 0 15px;
+        }
+        
+        .footer-image {
+            border-radius: 8px 8px 0 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .footer-image-section {
+            margin-top: 30px;
+            padding: 0 10px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <!-- 在body最顶部添加定位锚点 -->
+    <div class="top-anchor" id="top"></div>
+
+    <!-- 导航栏结构 -->
+    <nav class="nav-bar">
+        <img src="images/logo.png" class="nav-logo">
+        <div class="nav-links">
+            <a href="#top" class="nav-link home">首页</a>
+            <a href="#top" class="nav-link">购买服务</a>
+            <a href="#model" class="nav-link">模型生成</a>
+            <a href="#about" class="nav-link">关于我们</a>
+            <a href="#gallery" class="nav-link">产品展示</a>
+        </div>
+    </nav>
+
+
+    <!-- 主图与服务卡片 -->
+    <section class="hero-section" id="top">
+        <div class="services-container">
+            <!-- 医疗级钛合金腔体 -->
+            <div class="service-card" id="medical">
+                <div class="product-image"></div>
+                <div class="service-content">
+                    <div class="product-spec">
+                        医疗级钛合金腔体<br>
+                        Φ200×500mm
+                    </div>
+                    <button class="buy-btn" data-pay-page="payments\pay1.html">立即购买</button>
+                </div>
+            </div>
+
+            <!-- 无人机燃料贮箱 -->
+            <div class="service-card" id="drone">
+                <div class="product-image"></div>
+                <div class="service-content">
+                    <div class="product-spec">
+                        无人机燃料贮箱<br>
+                        Φ300×600mm
+                    </div>
+                    <button class="buy-btn" data-pay-page="payments\pay2.html">立即购买</button>
+                </div>
+            </div>
+
+            <!-- 定制试样服务 -->
+            <div class="service-card" id="custom">
+                <div class="product-image"></div>
+                <div class="service-content">
+                    <div class="product-spec">
+                        定制试样服务<br>
+                        首件7折优惠
+                    </div>
+                    <button class="buy-btn" data-pay-page="payments\pay3.html">立即购买</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 模型生成 -->
+    <section class="content-section" id="model">
+        <h2 class="section-title">模型生成</h2>
+        <div class="model-generator">
+            <div class="model-description">客户在线输入需求  自动生成零件模型</div>
+            <textarea class="design-input" 
+                      placeholder="请输入您的详细需求..."></textarea>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section class="content-section"  id="about">
+        <h2 class="section-title">关于我们</h2>
+        <div class="about-section">
+            <div class="about-image"></div>
+            <p class="about-text">
+                我们是一支由中南大学多学科背景学生组成的创业团队，核心成员来自机械设计制造及其自动化、计算机、公共管理、商科及汉语言文学专业，依托学校国家级材料实验室技术积累，专注薄壁旋压技术在新能源汽车领域的产业化应用。团队以"航天级技术民用化"为核心理念，通过跨学科协作实现技术创新与商业落地的无缝衔接。
+            </p>
+        </div>
+    </section>
+
+    <!-- 成品展示 -->
+    <section class="content-section" id="gallery">
+        <h2 class="section-title">产品展示</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="images/product1.jpg" class="gallery-img">
+            </div>
+            <div class="gallery-item">
+                <img src="images/product2.jpg" class="gallery-img">
+            </div>
+            <div class="gallery-item">
+                <img src="images/product3.jpg" class="gallery-img">
+            </div>
+        </div>
+    </section>
+
+    <section class="footer-image-section">
+        <img src="images/footer-bg.png" alt="合作伙伴" class="footer-image">
+    </section>
+
+    <script>
+        // 平滑滚动和高亮导航功能
+document.addEventListener('DOMContentLoaded', function() {
+    // 获取所有导航链接
+    const navLinks = document.querySelectorAll('.nav-link');
+    const topAnchor = document.getElementById('top');
+    
+    // 定义滚动函数
+    function smoothScroll(targetId) {
+        if (targetId === '#top') {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        } else {
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+                const headerOffset = 80; // 导航栏高度
+                const elementPosition = targetSection.offsetTop;
+                const offsetPosition = elementPosition - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    }
+
+    // 点击导航处理
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+
+            // 更新活动状态
+            navLinks.forEach(link => link.classList.remove('active'));
+            this.classList.add('active');
+
+            // 执行滚动
+            smoothScroll(targetId);
+
+            // 更新URL（保留历史记录）
+            if(targetId === '#top') {
+                history.replaceState(null, null, ' ');
+            } else {
+                history.replaceState(null, null, targetId);
+            }
+        });
+    });
+
+    // 滚动监听
+    window.addEventListener('scroll', () => {
+        const scrollPosition = window.scrollY + 100;
+        
+        // 顶部区域判断
+        if (scrollPosition < 100) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === '#top') {
+                    link.classList.add('active');
+                }
+            });
+            return;
+        }
+
+        // 区块高亮判断
+        document.querySelectorAll('section').forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            
+            if (scrollPosition >= sectionTop && 
+                scrollPosition < sectionTop + sectionHeight) {
+                const sectionId = `#${section.id}`;
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('href') === sectionId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    });
+
+    // 初始加载处理
+    if(window.location.hash) {
+        const targetId = window.location.hash;
+        const targetLink = document.querySelector(`a[href="${targetId}"]`);
+        if(targetLink) {
+            targetLink.click();
+        }
+    } else {
+        document.querySelector('.nav-link.home').click();
+    }
+
+    // 移动端触摸优化
+    let touchStartY = 0;
+    window.addEventListener('touchstart', e => {
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener('touchend', e => {
+        const touchEndY = e.changedTouches[0].clientY;
+        const deltaY = touchStartY - touchEndY;
+        
+        // 快速滑动到顶部
+        if(deltaY < -100 && window.scrollY > 500) {
+            smoothScroll('#top');
+        }
+    }, { passive: true });
+});
+    // 获取所有购买按钮
+const buyBtns = document.querySelectorAll('.buy-btn');
+
+// 为每个按钮添加点击事件
+buyBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        // 获取data属性中定义的支付页面路径
+        const payPage = this.dataset.payPage;
+        
+        // 执行页面跳转
+        window.location.href = payPage;
+        
+        // 如果需要新标签页打开，使用下面这行
+        // window.open(payPage, '_blank');
+    });
+});
+    </script>
+</body>
+</html>
