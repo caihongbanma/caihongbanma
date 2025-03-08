@@ -1,0 +1,19 @@
+/* style.css */
+@media (max-width: 768px) {
+    .services-container {
+        flex-direction: column;
+        top: -50px;
+    }
+    
+    .service-card {
+        width: 100%;
+    }
+    
+    .about-section {
+        flex-direction: column;
+    }
+    
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+}

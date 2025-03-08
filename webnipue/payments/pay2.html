@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>微信支付</title>
+    <style>
+        .payment-box {
+            width: 300px;
+            margin: 100px auto;
+            text-align: center;
+        }
+        #qrcode {
+            width: 250px;
+            height: 250px;
+            background: #eee;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-box">
+        <h2>微信扫码支付</h2>
+        <div id="qrcode"></div>
+        <p>支付金额：¥12000.00</p>
+    </div>
+    <script>
+        // 此处应调用后端API生成真实二维码
+        document.getElementById('qrcode').innerHTML = 
+            '<img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=TEST_PAYMENT" alt="支付二维码">';
+    </script>
+</body>
+</html>
